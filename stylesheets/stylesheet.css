@@ -1,0 +1,555 @@
+html, body {
+    display: flex;
+    margin: 0 auto;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    background-color: #000000;
+    background-image: url("../images/mountain.jpg");
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: hidden;
+}
+:root {
+    --color1: #ffffff;
+    --color2: #000000;
+    --dr1: #3d3d3d80;
+    --dr2: #ffffff80;
+    --textColor: #ffffff;
+    --textShadow: #00000080;
+    --opacity: 0.7;
+    --temp: #ffe3e3ab;
+}
+
+/* Media */
+@media only screen and (max-width: 1919px) {
+    .canvasEDiv, .canvasRDiv, .canvasLDiv, .canvasWDiv, .clockContainer {
+        display: none;
+    }
+}
+@media only screen and (min-width: 3000px) {
+    .clockContainer {
+        top: 350px !important;
+        right: 1580px !important;
+    }
+    .canvasRDiv {
+        top: 1150px !important;
+        right: 1600px !important;
+    }
+    .canvasLDiv {
+        top: 1220px !important;
+        right: 30px !important;
+    }
+    .canvasWDiv {
+        top: 450px !important;
+        right: 150px !important;
+    }
+    .canvasEDiv {
+        right: 960px !important;
+        top: 840px !important;
+        transform: translate(50%, -50%) !important;
+    }
+}
+
+/* Background Blur */
+.bkgblur {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(5px) brightness(60%) sepia(10%) saturate(150%);
+}
+
+/* Background Canvas */
+#bkgCanvas {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+/* Clock */
+.clockContainer {
+    z-index: 10;
+    opacity: var(--opacity);
+    backdrop-filter: blur(10px) brightness(120%);
+    border-radius: 10px;
+    height: 65px;
+    padding: 10px 20px;
+    border: 1px solid #ffffffff;
+    position: absolute;
+    top: 30px;
+    right: 1580px;
+    text-align: center;
+    transition: 0.3s;
+    color: var(--textColor);
+    text-shadow: 0px 0px 3px var(--textShadow);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+.clockContainer:hover {
+    transform: scale(1.05);
+    transform-origin: center;
+    cursor: default;
+    height: 90px;
+    border: 1px solid #ccf8ff;
+}
+.clock {
+    font-size: 65px;
+    line-height: 55px;
+    font-weight: 200;
+}
+.ampm {
+    font-size: 40px;
+    line-height: 40px;
+}
+.dayDateDiv {
+    transition: 0.3s;
+}
+.date {
+    font-size: 30px;
+    line-height: 20px;
+    padding-top: 8px;
+    font-weight: 150;
+}
+
+/* Main Canvas */
+.canvasEDiv {
+    position: absolute;
+    right: 50%;
+    top: 50%;
+    transform: translate(50%, -50%);
+    width: 800px;
+    height: 800px;
+}
+.eBlur {
+    position: absolute;
+    width: 95%;
+    height: 95%;
+    border-radius: 100%;
+    backdrop-filter: blur(6px);
+}
+#canvasE {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+/* Reset Canvas */
+.canvasRDiv {
+    position: absolute;
+    top: 750px;
+    right: 1600px;
+    width: 150px;
+    height: 150px;
+}
+.rBlur {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    border-radius: 100%;
+    backdrop-filter: blur(5px);
+}
+#canvasR {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
+/* Light Canvas */
+.canvasLDiv {
+    position: absolute;
+    right: 30px;
+    top: 910px;
+    height: 100px;
+    width: 100px;
+}
+.lBlur {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    border-radius: 100%;
+    backdrop-filter: blur(5px);
+}
+#canvasL {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    cursor: pointer;
+}
+
+/* Weather Canvas */
+.canvasWDiv {
+    position: absolute;
+    top: 70px;
+    right: 150px;
+    height: 300px;
+    width: 300px;
+}
+.wBlur {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    border-radius: 100%;
+    backdrop-filter: blur(5px);
+    transition: 0.3s;
+}
+#canvasW {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
+/* Container */
+.canvasElem {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    transition: 0.3s;
+    filter: drop-shadow(0px 0px 2px var(--dr1));
+}
+.hide {
+    transform: scale(0);
+    opacity: 0;
+}
+.show {
+    transform: scale(1);
+    opacity: 1;
+}
+
+/* Light */
+.power-switch {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    width: 100px;
+    height: 100px;
+    margin: auto;
+    background: #2C2B34;
+    border: none;
+    outline: none;
+    border-radius: 100px;
+    box-shadow: 0px 0px 5px 0px #444444b6, 0px 0px 0px 15px #86929457;
+}
+.power-switch:hover {
+    background: #35343f;
+}
+.power-switch:active {
+    background: #3D3C45;
+    box-shadow: 0px 10px 10px -5px #727272cc, 0px 0px 0px 22px #86929457;
+    transform: scale(.90);
+}
+.power-switchButton {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    filter: drop-shadow(0px 0px 6px #00eeffcc);
+}
+.power-switchButton:after {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background: radial-gradient(circle closest-side, #00eeff56, transparent);
+    filter: blur(20px);
+    opacity: 0;
+    transition: opacity 1s ease, transform 1s ease;
+    transform: perspective(1px) translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+.power-on, .power-off {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    z-index: 1;
+    fill: none;
+    stroke: #ffffff;
+    stroke-width: 8px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+.power-switchLine {
+    opacity: 0.2;
+}
+.power-switchCircle {
+    opacity: 0.2;
+    transform: rotate(-58deg);
+    transform-origin: center 53.33px;
+    stroke-dasharray: 220;
+    stroke-dashoffset: 40;
+}
+.power-on {
+    filter: drop-shadow(0px 0px 6px #00eeffcc);
+}
+.power-on .power-switchLine {
+    opacity: 0;
+    transition: opacity 0.3s ease 1s;
+}
+.power-on .power-switchCircle {
+    opacity: 1;
+    stroke-dashoffset: 220;
+    transition: transform 0s ease, stroke-dashoffset 1s ease 0s;
+}
+.power-switch input {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 2;
+    cursor: pointer;
+    opacity: 0;
+}
+.power-switch input:checked+.power-switchButton:after {
+    opacity: 0.15;
+    transform: scale(2) perspective(1px) translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.power-switch input:checked+.power-switchButton .power-on, .power-switch input:checked+.power-switchButton .power-off {
+    -webkit-animation: click-animation 0.3s ease forwards;
+    animation: click-animation 0.3s ease forwards;
+    transform: scale(1);
+}
+.power-switch input:checked+.power-switchButton .power-on .power-switchLine, .power-switch input:checked+.power-switchButton .power-off .power-switchLine {
+    -webkit-animation: line-animation 0.8s ease-in forwards;
+    animation: line-animation 0.8s ease-in forwards;
+}
+.power-switch input:checked+.power-switchButton .power-on .power-switchCircle, .power-switch input:checked+.power-switchButton .power-off .power-switchCircle {
+    transform: rotate(302deg);
+}
+.power-switch input:checked+.power-switchButton .power-on .power-switchLine {
+    opacity: 1;
+    transition: opacity 0.05s ease-in 0.55s;
+}
+.power-switch input:checked+.power-switchButton .power-on .power-switchCircle {
+    transform: rotate(302deg);
+    stroke-dashoffset: 40;
+    transition: transform 0.4s ease 0.2s, stroke-dashoffset 0.4s ease 0.2s;
+}
+@-webkit-keyframes line-animation {
+    0% {
+        transform: translateY(0);
+    }
+
+    10% {
+        transform: translateY(10px);
+    }
+
+    40% {
+        transform: translateY(-25px);
+    }
+
+    60% {
+        transform: translateY(-25px);
+    }
+
+    85% {
+        transform: translateY(10px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+@keyframes line-animation {
+    0% {
+        transform: translateY(0);
+    }
+
+    10% {
+        transform: translateY(10px);
+    }
+
+    40% {
+        transform: translateY(-25px);
+    }
+
+    60% {
+        transform: translateY(-25px);
+    }
+
+    85% {
+        transform: translateY(10px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+@-webkit-keyframes click-animation {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(0.9);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+@keyframes click-animation {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(0.9);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Weather */
+.weatherWidget {
+    width: 100%;
+    margin: 0 auto;
+    height: 100%;
+    color: var(--textColor);
+    text-shadow: 0px 0px 3px var(--textShadow);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 200;
+}
+.weatherWidget_Div {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -25%);
+}
+.weatherWidget_topDiv {
+    width: 100%;
+    height: 20%;
+    column-count: 3;
+    padding-bottom: 10px;
+}
+.weatherWidget_location {
+    width: calc(100% - 15px);
+    height: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    vertical-align: middle;
+    margin-left: 15px;
+}
+.weatherWidget_locationText {
+    display: block;
+    line-height: 20px;
+    font-size: 18px;
+    margin-top: auto;
+    margin-bottom: auto;
+    font-weight: 300;
+}
+.weatherWidget_currIcon {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    vertical-align: middle;
+}
+.weatherWidget_currIconImg {
+    width: 60px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+.weatherWidget_topDiv_rightDiv {
+    width: calc(100% - 15px);
+    height: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    vertical-align: middle;
+    margin-right: 15px;
+}
+.weatherWidget_topDiv_rightInnerDiv {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+.weatherWidget_currTemp {
+    display: block;
+    font-size: 26px;
+}
+.weatherWidget_currDesc {
+    display: block;
+    font-size: 10px;
+    text-transform: capitalize;
+}
+.weatherWidget_bottomDiv {
+    width: 100%;
+    height: max-content;
+    column-count: 5;
+}
+.weatherWidget_dayDiv {
+    width: 100%;
+    height: max-content;
+    margin: 0 auto;
+    border-radius: 8px;
+}
+.weatherWidget_dayDiv:hover {
+    background-color: #f2f3f428;
+    cursor: default;
+}
+.weatherWidget_dayTextDiv {
+    padding-top: 5px;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    vertical-align: middle;
+    color: inherit;
+}
+.weatherWidget_dayText {
+    display: block;
+    font-size: 13px;
+    margin-top: auto;
+    margin-bottom: auto;
+    color: inherit;
+}
+.weatherWidget_dayIcon {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    vertical-align: middle;
+}
+.weatherWidget_dayIconImg {
+    width: 35px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+.weatherWidget_dayTemps {
+    width: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    vertical-align: middle;
+    color: inherit;
+}
+.weatherWidget_dayTempsInnerDiv {
+    margin-top: auto;
+    margin-bottom: auto;
+    color: inherit;
+}
+.weatherWidget_dayHigh {
+    display: block;
+    font-size: 13px;
+    color: inherit;
+}
+.weatherWidget_dayLow {
+    display: block;
+    font-size: 13px;
+    color: inherit;
+}

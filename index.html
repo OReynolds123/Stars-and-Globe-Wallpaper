@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css">
+    <title>Background</title>
+</head>
+
+<body>
+    <!-- Background Blur -->
+    <div class="bkgblur"></div>
+
+    <!-- Background Canvas -->
+    <canvas id="bkgCanvas"></canvas>
+
+    <!-- Clock -->
+    <div class="clockContainer" onmouseover="clockContainerOn();" onmouseleave="clockContainerOff();">
+        <div class="clock">00:00 <span class="ampm">AM</span></div>
+        <div class="dayDateDiv hide">
+            <div class="date"></div>
+        </div>
+    </div>
+
+    <!-- Earth Canvas -->
+    <div class="canvasEDiv">
+        <div class="eBlur"></div>
+        <canvas id="canvasE"></canvas>
+    </div>
+
+    <!-- Reset Canvas -->
+    <div class="canvasRDiv">
+        <div class="rBlur"></div>
+        <canvas id="canvasR" onmousedown="canvasRPress();"></canvas>
+    </div>
+
+    <!-- Light Canvas -->
+    <div class="canvasLDiv" onmouseleave="canvasOff('L');">
+        <div class="lBlur"></div>
+        <canvas id="canvasL" class="canvasElem show" onmouseover="canvasOn('L'); httpRequestRefresh();"></canvas>
+        <div id="containerL" class="canvasElem hide">
+            <div class="power-switch">
+                <input type="checkbox" id="check" />
+                <div class="power-switchButton">
+                    <svg class="power-off">
+                        <use xlink:href="#powerline" class="power-switchLine" />
+                        <use xlink:href="#powercircle" class="power-switchCircle" />
+                    </svg>
+                    <svg class="power-on">
+                        <use xlink:href="#powerline" class="power-switchLine" />
+                        <use xlink:href="#powercircle" class="power-switchCircle" />
+                    </svg>
+                </div>
+                <svg style="display: none;">
+                    <symbol viewBox="0 0 150 150" id="powerline">
+                        <line x1="75" y1="34" x2="75" y2="58" />
+                    </symbol>
+                    <symbol viewBox="0 0 150 150" id="powercircle">
+                        <circle cx="75" cy="80" r="35" />
+                    </symbol>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <!-- Weather Canvas -->
+    <div class="canvasWDiv" onmouseleave="canvasOff('W');">
+        <div class="wBlur"></div>
+        <canvas id="canvasW" class="canvasElem show" onmousedown="canvasOn('W'); parseWeatherData();"></canvas>
+        <div id="containerW" class="canvasElem hide">
+            <div class="weatherWidget">
+                <div class="weatherWidget_Div">
+                    <div class="weatherWidget_topDiv">
+                        <div class="weatherWidget_location">
+                            <div class="weatherWidget_locationText">Location</div>
+                        </div>
+                        <div class="weatherWidget_currIcon">
+                            <img class="weatherWidget_currIconImg" src="images/WeatherIcons/sunny.png" />
+                        </div>
+                        <div class="weatherWidget_topDiv_rightDiv">
+                            <div class="weatherWidget_topDiv_rightInnerDiv">
+                                <div class="weatherWidget_currTemp">--&deg;F</div>
+                                <div class="weatherWidget_currDesc">-----</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="weatherWidget_bottomDiv">
+                        <a id="weatherClick1">
+                            <div class="weatherWidget_dayDiv">
+                                <div class="weatherWidget_dayTextDiv">
+                                    <div class="weatherWidget_dayText">---</div>
+                                </div>
+                                <div class="weatherWidget_dayIcon">
+                                    <img class="weatherWidget_dayIconImg" src="images/WeatherIcons/sunny.png" />
+                                </div>
+                                <div class="weatherWidget_dayTemps">
+                                    <div class="weatherWidget_dayTempsInnerDiv">
+                                        <div class="weatherWidget_dayHigh">--&deg;F</div>
+                                        <div class="weatherWidget_dayLow">--&deg;F</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <a id="weatherClick2">
+                            <div class="weatherWidget_dayDiv">
+                                <div class="weatherWidget_dayTextDiv">
+                                    <div class="weatherWidget_dayText">---</div>
+                                </div>
+                                <div class="weatherWidget_dayIcon">
+                                    <img class="weatherWidget_dayIconImg" src="images/WeatherIcons/sunny.png" />
+                                </div>
+                                <div class="weatherWidget_dayTemps">
+                                    <div class="weatherWidget_dayTempsInnerDiv">
+                                        <div class="weatherWidget_dayHigh">--&deg;F</div>
+                                        <div class="weatherWidget_dayLow">--&deg;F</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <a id="weatherClick3">
+                            <div class="weatherWidget_dayDiv">
+                                <div class="weatherWidget_dayTextDiv">
+                                    <div class="weatherWidget_dayText">---</div>
+                                </div>
+                                <div class="weatherWidget_dayIcon">
+                                    <img class="weatherWidget_dayIconImg" src="images/WeatherIcons/sunny.png" />
+                                </div>
+                                <div class="weatherWidget_dayTemps">
+                                    <div class="weatherWidget_dayTempsInnerDiv">
+                                        <div class="weatherWidget_dayHigh">--&deg;F</div>
+                                        <div class="weatherWidget_dayLow">--&deg;F</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <a id="weatherClick4">
+                            <div class="weatherWidget_dayDiv">
+                                <div class="weatherWidget_dayTextDiv">
+                                    <div class="weatherWidget_dayText">---</div>
+                                </div>
+                                <div class="weatherWidget_dayIcon">
+                                    <img class="weatherWidget_dayIconImg" src="images/WeatherIcons/sunny.png" />
+                                </div>
+                                <div class="weatherWidget_dayTemps">
+                                    <div class="weatherWidget_dayTempsInnerDiv">
+                                        <div class="weatherWidget_dayHigh">--&deg;F</div>
+                                        <div class="weatherWidget_dayLow">--&deg;F</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <a id="weatherClick5">
+                            <div class="weatherWidget_dayDiv">
+                                <div class="weatherWidget_dayTextDiv">
+                                    <div class="weatherWidget_dayText">---</div>
+                                </div>
+                                <div class="weatherWidget_dayIcon">
+                                    <img class="weatherWidget_dayIconImg" src="images/WeatherIcons/sunny.png" />
+                                </div>
+                                <div class="weatherWidget_dayTemps">
+                                    <div class="weatherWidget_dayTempsInnerDiv">
+                                        <div class="weatherWidget_dayHigh">--&deg;F</div>
+                                        <div class="weatherWidget_dayLow">--&deg;F</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="javascripts/globeDots.js"></script>
+<script src="javascripts/script.js"></script>
+<script type="text/javascript">
+    //function livelySystemInformation(data) {
+    //    //var obj = JSON.parse(data);
+    //}
+</script>
+
+</html>
