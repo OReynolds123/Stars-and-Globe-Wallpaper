@@ -1,4 +1,4 @@
-# Stars-and-Globe-Wallpaper
+# Stars and Globe Wallpaper
 
 ![alt text](https://github.com/OReynolds123/Stars-and-Globe-Wallpaper/blob/main/image.png?raw=true)
 
